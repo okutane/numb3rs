@@ -1,0 +1,16 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.money {
+  border-collapse: collapse;
+}
+
+.money tr {
+  border-style: solid;
+}
+
+.money td {
+  border-style: solid;
+}
