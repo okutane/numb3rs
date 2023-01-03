@@ -10,4 +10,5 @@ import java.math.BigDecimal;
 public class Item {
     BigDecimal value;
     String comment;
+    boolean pending;
 }

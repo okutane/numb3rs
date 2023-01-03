@@ -7,12 +7,20 @@ class MoneyCell extends React.Component<{ items: any[] }> {
     return this.props.items.map((i) => i.value).reduceRight((a, b) => a + b);
   }
 
+  evalClassName(): string {
+    if (this.props.items.find(e => e.pending)) {
+      return "pending";
+    }
+
+    return "";
+  }
+
   render() {
     if (!this.props.items || !this.props.items.length) {
       return <td />;
     }
 
-    return <td>{this.calc()}</td>;
+    return <td className={`${this.evalClassName()}`}>{this.calc()}</td>;
   }
 }
 
