@@ -14,3 +14,28 @@
 .money td {
   border-style: solid;
 }
+
+tr:hover {
+  background-color: #eee;
+}
+
+tr:hover td {
+  background-color: transparent;
+}
+
+td.today {
+  background-color: #ff8;
+}
+
+th.today {
+  background-color: #ff8;
+}
+
+td.pending {
+  font-style: italic;
+}
+
+td.today.pending {
+  font-style: bold;
+  color: red;
+}

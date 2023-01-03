@@ -30,7 +30,7 @@ public class SpendingsController {
         TreeMap<LocalDate, VisibleDate> visibleDates = new TreeMap<>();
         numbers.stream()
                 .forEach(n -> {
-                    Item item = new Item(n.getValue(), n.getComment());
+                    Item item = new Item(n.getValue(), n.getComment(), n.isPending());
 
                     String date = n.getDate()
                             .format(DateTimeFormatter.ISO_LOCAL_DATE);
