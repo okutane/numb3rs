@@ -1,6 +1,5 @@
 package ru.urururu.numb3rs.model.spendings;
 
-
 public enum CellStyle {
     TODAY("today");
 
