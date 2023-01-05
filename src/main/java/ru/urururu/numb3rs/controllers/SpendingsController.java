@@ -62,6 +62,17 @@ public class SpendingsController {
                 }
             });
 
+        LocalDate currentDate = LocalDate.now();
+        VisibleDate todayVisibleDate = VisibleDate.builder()
+                .value(currentDate.format(DateTimeFormatter.ISO_LOCAL_DATE))
+                .style(CellStyle.TODAY.getStyleName())
+                .build();
+
+        visibleDates.put(
+                currentDate,
+                todayVisibleDate
+        );
+
         Category home = Category.builder()
             .title("Ремонт")
             .expected(BigDecimal.valueOf(15000000))
