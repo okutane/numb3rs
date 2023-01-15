@@ -1,0 +1,27 @@
+root = true
+
+[*]
+indent_size = 4
+insert_final_newline = false
+max_line_length = 85
+tab_width = 4
+ij_continuation_indent_size = 8
+ij_any_wrap_long_lines = true
+ij_any_method_parameters_new_line_after_left_paren = true
+ij_any_call_parameters_new_line_after_left_paren = true
+ij_any_method_parameters_right_paren_on_new_line = true
+ij_any_call_parameters_right_paren_on_new_line = true
+ij_any_method_parameters_wrap = on_every_item
+ij_any_call_parameters_wrap = on_every_item
+ij_any_parameter_annotation_wrap = on_every_item
+ij_any_class_annotation_wrap = on_every_item
+ij_any_method_annotation_wrap = on_every_item
+ij_any_field_annotation_wrap = on_every_item
+ij_any_variable_annotation_wrap = on_every_item
+ij_java_annotation_parameter_wrap = on_every_item
+ij_java_do_not_wrap_after_single_annotation_in_parameter = true
+ij_any_spaces_within_annotation_parentheses = false
+ij_any_array_initializer_right_brace_on_new_line = true
+ij_any_method_call_chain_wrap = on_every_item
+ij_javascript_enforce_trailing_comma = whenmultiline
+ij_typescript_enforce_trailing_comma = whenmultiline
