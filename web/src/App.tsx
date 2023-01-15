@@ -1,7 +1,5 @@
-import React, {FormEvent, SyntheticEvent, useEffect} from "react";
-import {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./styles.css";
-import {SpendingsResponse} from "./apiClient/data-contracts";
 import SpendingForm from "./components/SpendingForm";
 import {Spendings} from "./apiClient/Spendings";
 
@@ -71,7 +69,7 @@ export default function App() {
             <h1>Hello CodeSandbox</h1>
             <h2>Start editing to see some magic happen!</h2>
 
-            <SpendingForm updateState={() => updateSpendings()}/>
+            <SpendingForm onSubmit={() => updateSpendings()}/>
 
             <table className="money">
                 <thead>

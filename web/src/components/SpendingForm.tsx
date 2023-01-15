@@ -1,6 +1,6 @@
 import React from "react";
 
-class SpendingForm extends React.Component<{ updateState: any }> {
+class SpendingForm extends React.Component<{ onSubmit: any }> {
     render() {
 
         return (
@@ -48,7 +48,7 @@ class SpendingForm extends React.Component<{ updateState: any }> {
         let xhr = new XMLHttpRequest();
         xhr.open('POST', 'http://localhost:8080/numbers');
         xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-        xhr.onload = () => this.props.updateState()
+        xhr.onload = () => this.props.onSubmit()
         return xhr;
     }
 }
