@@ -2,10 +2,10 @@ root = true
 
 [*]
 indent_size = 4
-insert_final_newline = false
-max_line_length = 85
+trim_trailing_whitespace = true
+max_line_length = 100
 tab_width = 4
-ij_continuation_indent_size = 8
+ij_continuation_indent_size = 4
 ij_any_wrap_long_lines = true
 ij_any_method_parameters_new_line_after_left_paren = true
 ij_any_call_parameters_new_line_after_left_paren = true
@@ -25,3 +25,9 @@ ij_any_array_initializer_right_brace_on_new_line = true
 ij_any_method_call_chain_wrap = on_every_item
 ij_javascript_enforce_trailing_comma = whenmultiline
 ij_typescript_enforce_trailing_comma = whenmultiline
+
+[*.md]
+max_line_length = off
+
+[{*.html, *.htm}]
+max_line_length = off
