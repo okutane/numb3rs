@@ -21,11 +21,18 @@ public class NumbersController {
     @Autowired
     NumbersService numbersService;
 
-    @RequestMapping(value = "/numbers", method = RequestMethod.POST, consumes = "application/json", produces =
+    @RequestMapping(value = "/numbers",
+        method = RequestMethod.POST,
+        consumes = "application/json",
+        produces =
             "application/json")
     public Number addNumber(@Valid @RequestBody AddNumberRequest number) {
-        return numbersService.addNumber(number.value, number.category, number.comment, LocalDate.parse(number.date,
-                DateTimeFormatter.ISO_LOCAL_DATE));
+        return numbersService.addNumber(
+            number.value,
+            number.category,
+            number.comment,
+            LocalDate.parse(number.date, DateTimeFormatter.ISO_LOCAL_DATE)
+        );
     }
 
     @RequestMapping(value = "/numbers", method = RequestMethod.GET, produces = "application/json")

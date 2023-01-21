@@ -24,14 +24,14 @@ import com.mongodb.DBObject;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class NumbersServiceTest {
-	@Autowired
-	MongoTemplate mongoTemplate;
-	
-	@Autowired
-	NumbersService service;
-	
+    @Autowired
+    MongoTemplate mongoTemplate;
+
+    @Autowired
+    NumbersService service;
+
     @Test
     public void addNumber() {
-    	service.addNumber(BigDecimal.ONE, "other", "one", LocalDate.of(2022, 11, 30));
+        service.addNumber(BigDecimal.ONE, "other", "one", LocalDate.of(2022, 11, 30));
     }
 }
