@@ -17,13 +17,13 @@ public class NumbersService {
     public Number addNumber(BigDecimal value, String category, String comment, LocalDate date) {
 
         Number number = Number
-                .builder()
-                .category(category)
-                .comment(comment)
-                .date(date)
-                .value(value)
-                .pending(date.isAfter(LocalDate.now()))
-                .build();
+            .builder()
+            .category(category)
+            .comment(comment)
+            .date(date)
+            .value(value)
+            .pending(date.isAfter(LocalDate.now()))
+            .build();
 
         return numberRepository.save(number);
     }

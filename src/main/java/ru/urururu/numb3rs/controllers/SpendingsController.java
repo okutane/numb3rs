@@ -4,13 +4,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.urururu.numb3rs.data.Number;
-import ru.urururu.numb3rs.model.spendings.*;
+import ru.urururu.numb3rs.model.spendings.Category;
+import ru.urururu.numb3rs.model.spendings.Expenses;
+import ru.urururu.numb3rs.model.spendings.Item;
+import ru.urururu.numb3rs.model.spendings.SpendingsResponse;
+import ru.urururu.numb3rs.model.spendings.VisibleDate;
+import ru.urururu.numb3rs.model.spendings.VisibleDates;
 import ru.urururu.numb3rs.service.NumbersService;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
@@ -29,52 +38,52 @@ public class SpendingsController {
         Map<String, Category> subCats = new TreeMap<>();
         TreeMap<LocalDate, VisibleDate> visibleDates = new TreeMap<>();
         numbers.stream()
-                .forEach(n -> {
-                    Item item = new Item(n.getValue(), n.getComment(), n.isPending());
+            .forEach(n -> {
+                Item item = new Item(n.getValue(), n.getComment(), n.isPending());
 
-                    String date = n.getDate()
-                            .format(DateTimeFormatter.ISO_LOCAL_DATE);
-                    subCats.computeIfAbsent(n.getCategory(), key -> Category.builder()
-                                    .title(key)
-                                    .items(new TreeMap<>())
-                                    .build()).getItems().computeIfAbsent(date, d -> new ArrayList<>())
-                            .add(item);
+                String date = n.getDate()
+                    .format(DateTimeFormatter.ISO_LOCAL_DATE);
+                subCats.computeIfAbsent(n.getCategory(), key -> Category.builder()
+                        .title(key)
+                        .items(new TreeMap<>())
+                        .build()).getItems().computeIfAbsent(date, d -> new ArrayList<>())
+                    .add(item);
 
-                    visibleDates.put(n.getDate(), VisibleDate.builder()
-                            .value(date)
-                            .build());
+                visibleDates.put(n.getDate(), VisibleDate.builder()
+                    .value(date)
+                    .build());
 
-                    if (n.isPending()) {
-                        planned.set(planned.get()
-                                .add(n.getValue()));
-                    } else {
-                        paid.set(paid.get()
-                                .add(n.getValue()));
-                    }
-                });
+                if (n.isPending()) {
+                    planned.set(planned.get()
+                        .add(n.getValue()));
+                } else {
+                    paid.set(paid.get()
+                        .add(n.getValue()));
+                }
+            });
 
         Category home = Category.builder()
-                .title("Ремонт")
-                .expected(BigDecimal.valueOf(15000000))
-                .subCats(subCats)
-                .build();
+            .title("Ремонт")
+            .expected(BigDecimal.valueOf(15000000))
+            .subCats(subCats)
+            .build();
 
         Expenses expenses = Expenses.builder()
-                .cats(Collections.singletonMap("home", home))
-                .total(paid.get()
-                        .add(planned.get()))
-                .paid(paid.get())
-                .planned(planned.get())
-                .build();
+            .cats(Collections.singletonMap("home", home))
+            .total(paid.get()
+                .add(planned.get()))
+            .paid(paid.get())
+            .planned(planned.get())
+            .build();
 
         return SpendingsResponse.builder()
-                .expenses(expenses)
-                .visibleDates(VisibleDates.builder()
-                        .dates(visibleDates.values()
-                                .stream()
-                                .collect(Collectors.toList()))
-                        .build())
-                .build();
+            .expenses(expenses)
+            .visibleDates(VisibleDates.builder()
+                .dates(visibleDates.values()
+                    .stream()
+                    .collect(Collectors.toList()))
+                .build())
+            .build();
         /**
 
          expenses: {

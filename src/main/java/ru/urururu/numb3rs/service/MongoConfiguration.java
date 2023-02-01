@@ -9,18 +9,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-@Profile({ "production" })
+@Profile({"production"})
 @Configuration
 public class MongoConfiguration {
 
-	@Value("${mongoUsr}")
-	private String mongoUsr;
+    @Value("${mongoUsr}")
+    private String mongoUsr;
 
-	@Value("${mongoPwd}")
-	private String mongoPwd;
+    @Value("${mongoPwd}")
+    private String mongoPwd;
 
-	@Bean
-	public MongoClient getMongoClient() {
-		return MongoClients.create("mongodb://localhost:27017");
-	}
+    @Bean
+    public MongoClient getMongoClient() {
+        return MongoClients.create("mongodb://localhost:27017");
+    }
 }

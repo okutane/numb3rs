@@ -17,10 +17,10 @@ public class SwaggerConfig {
     @Bean
     public Docket postsApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("public-api")
-                .apiInfo(apiInfo())
-                .select()
-                .build();
+            .groupName("public-api")
+            .apiInfo(apiInfo())
+            .select()
+            .build();
     }
 
     private Predicate<String> postPaths() {

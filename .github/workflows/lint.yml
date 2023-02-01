@@ -1,0 +1,36 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Lint checker
+
+on:
+    push:
+        branches: [ "master" ]
+    pull_request:
+        branches: [ "master" ]
+
+jobs:
+    lint_java:
+
+        runs-on: ubuntu-latest
+
+        steps:
+            -   uses: actions/checkout@v3
+            -   name: Checkstyle with Maven
+                run: mvn checkstyle:check
+
+    lint_js:
+        defaults:
+            run:
+                working-directory: web
+
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v3
+            -   run: npm ci
+            -   run: npm run lint
