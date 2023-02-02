@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.urururu.numb3rs.data.Number;
 import ru.urururu.numb3rs.model.spendings.Category;
+import ru.urururu.numb3rs.model.spendings.CellStyle;
 import ru.urururu.numb3rs.model.spendings.Expenses;
 import ru.urururu.numb3rs.model.spendings.Item;
 import ru.urururu.numb3rs.model.spendings.SpendingsResponse;
@@ -61,6 +62,17 @@ public class SpendingsController {
                         .add(n.getValue()));
                 }
             });
+
+        LocalDate currentDate = LocalDate.now();
+        VisibleDate todayVisibleDate = VisibleDate.builder()
+            .value(currentDate.format(DateTimeFormatter.ISO_LOCAL_DATE))
+            .style(CellStyle.TODAY.getStyleName())
+            .build();
+
+        visibleDates.put(
+            currentDate,
+            todayVisibleDate
+        );
 
         Category home = Category.builder()
             .title("Ремонт")

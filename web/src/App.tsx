@@ -2,25 +2,32 @@ import React, {FormEvent, SyntheticEvent, useEffect} from "react";
 import {useState} from "react";
 import "./styles.css";
 
-class MoneyCell extends React.Component<{ items: any[] }> {
+class MoneyCell extends React.Component<{ items: any[], style: string }> {
     calc(): number {
         return this.props.items.map((i) => i.value).reduceRight((a, b) => a + b);
     }
 
+    getCellValue(): any {
+        if (!this.props.items || !this.props.items.length) {
+            return undefined
+        }
+        return this.calc()
+    }
+
     evalClassName(): string {
-        if (this.props.items.find(e => e.pending)) {
-            return "pending";
+        let classes = "";
+        if (this.props.items && this.props.items.find(e => e.pending)) {
+            classes += "pending ";
+        }
+        if (this.props.style) {
+            classes += this.props.style
         }
 
-        return "";
+        return classes;
     }
 
     render() {
-        if (!this.props.items || !this.props.items.length) {
-            return <td/>;
-        }
-
-        return <td className={`${this.evalClassName()}`}>{this.calc()}</td>;
+        return <td className={`${this.evalClassName()}`}>{this.getCellValue()}</td>;
     }
 }
 
@@ -42,10 +49,7 @@ class SpendingsForm extends React.Component<{ setRootState: any, setVisibleDates
 
                 let xhr = new XMLHttpRequest();
                 xhr.open('POST', 'http://localhost:8080/numbers');
-                xhr.setRequestHeader(
-                    'Content-type',
-                    'application/json; charset=utf-8',
-                );
+                xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 
                 xhr.send(JSON.stringify({
                     date: target.dateInput.value,
@@ -57,19 +61,13 @@ class SpendingsForm extends React.Component<{ setRootState: any, setVisibleDates
                 xhr.onload = function () {
                     let xhr = new XMLHttpRequest();
                     xhr.open('GET', 'http://localhost:8080/spendings');
-                    xhr.setRequestHeader(
-                        'Content-type',
-                        'application/json; charset=utf-8',
-                    );
+                    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
                     xhr.responseType = 'json'
                     xhr.send();
 
                     xhr.onload = function () {
                         srs(xhr.response);
-                        svd(
-                            xhr.response.visibleDates.dates
-                                .map((a: Record<"value", string>) => a.value),
-                        );
+                        svd(xhr.response.visibleDates.dates);
                     };
                 };
             }}>
@@ -99,19 +97,12 @@ export default function App() {
     });
 
     const [visibleDates, setVisibleDates] = useState(() => {
-        return Array.from(
-            new Set([
-                "2022-08-01",
-                "2022-09-01",
-                "2022-10-01",
-                "2022-11-01",
-                "2022-11-16",
-                "2022-11-17",
-                "2022-11-30",
-                "2022-12-16",
-                "2023-04-01",
-            ]),
-        ).sort();
+        return [
+            {
+                value: "2023-01-01",
+                style: "today",
+            },
+        ]
     });
 
     useEffect(() => {
@@ -123,10 +114,7 @@ export default function App() {
 
         xhr.onload = function () {
             setRootState(xhr.response);
-            setVisibleDates(
-                xhr.response.visibleDates.dates
-                    .map((a: Record<"value", string>) => a.value),
-            );
+            setVisibleDates(xhr.response.visibleDates.dates);
         };
     }, []);
 
@@ -135,21 +123,18 @@ export default function App() {
             <h1>Hello CodeSandbox</h1>
             <h2>Start editing to see some magic happen!</h2>
 
-            <SpendingsForm setRootState={setRootState}
-                           setVisibleDates={setVisibleDates}/>
+            <SpendingsForm setRootState={setRootState} setVisibleDates={setVisibleDates}/>
 
             <table className="money">
                 <thead>
                 <tr>
                     <th></th>
                     {visibleDates.map(day => (
-                        <th key={day}>{new Date(day).toLocaleDateString(
-                            'ru-RU',
-                            {
-                                day: 'numeric',
-                                month: 'numeric',
-                            },
-                        )}</th>
+                        <th className={day.style}
+                            key={day.value}>{new Date(day.value).toLocaleDateString('ru-RU', {
+                            day: 'numeric',
+                            month: 'numeric',
+                        })}</th>
                     ))}
                 </tr>
                 </thead>
@@ -162,10 +147,12 @@ export default function App() {
                             </td>
                             {visibleDates.map((item, index) => (
                                 <MoneyCell
-                                    key={item}
+                                    key={item.value}
                                     items={
-                                        (v as Record<"items", Record<string, any>>).items[item]
+                                        (v as Record<"items", Record<string, any>>)
+                                            .items[item.value]
                                     }
+                                    style={item.style}
                                 />
                             ))}
                         </tr>
