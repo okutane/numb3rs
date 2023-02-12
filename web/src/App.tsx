@@ -29,7 +29,7 @@ export default function App() {
 
     const [rootState, setRootState] = useState<any>({
         expenses: {cats: {"home": {items: [], subCats: {}, title: "home"}}},
-        visibleDates: {dates: []}
+        visibleDates: {dates: []},
     });
 
     const [visibleDates, setVisibleDates] = useState(() => {
@@ -43,8 +43,8 @@ export default function App() {
                 "2022-11-17",
                 "2022-11-30",
                 "2022-12-16",
-                "2023-04-01"
-            ])
+                "2023-04-01",
+            ]),
         ).sort();
     });
 
@@ -69,7 +69,7 @@ export default function App() {
             <h1>Hello CodeSandbox</h1>
             <h2>Start editing to see some magic happen!</h2>
 
-            <SpendingForm onSubmit={() => updateSpendings()}/>
+            <SpendingForm onSubmit={updateSpendings}/>
 
             <table className="money">
                 <thead>
@@ -99,7 +99,7 @@ export default function App() {
                                 />
                             ))}
                         </tr>
-                    )
+                    ),
                 )}
                 </tbody>
             </table>
